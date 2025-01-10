@@ -1,5 +1,6 @@
 package pr.ellt07;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,7 +22,8 @@ public class Array_MenuTemperaturas {
             System.out.println("3. Meses mas calidos");
             System.out.println("4. Hallar mes calido");
             System.out.println("5. Recorre de otra forma");
-            System.out.println("6. Salir");
+            System.out.println("6. Temperaturas repetida");
+            System.out.println("7. Salir");
             System.out.println("---------------------");
 
             System.out.println("Elige una opcion: ");
@@ -35,7 +37,7 @@ public class Array_MenuTemperaturas {
                     TemperaturaMedia(temperaturaMeses);
                 }
                 case 3 -> {
-                    MesesMasCalidos(temperaturaMeses);
+                    MesesCalidos(temperaturaMeses);
                 }
                 case 4 -> {
                     HallarMesCalido(temperaturaMeses);
@@ -44,6 +46,9 @@ public class Array_MenuTemperaturas {
                     RecorrerOtraForma(temperaturaMeses);
                 }
                 case 6 -> {
+                    TemperaturasRepetidas(temperaturaMeses);
+                }
+                case 7 -> {
                     System.out.println("Has salido!");
                 }
                 default ->
@@ -69,40 +74,70 @@ public class Array_MenuTemperaturas {
         System.out.println(suma / miArray.length);
     }
 
-    public static void MesesMasCalidos(int[] miArray) {
+    public static void MesesCalidos(int[] miArray) {
         final int TEMPERATURAMAX = 30;
-        int[] mesesCalidos= new int[12];
+        int[] meses = new int[miArray.length]; // Para guardar las posiciones de los meses calurosos
+        int[] temperaturas = new int[miArray.length]; // Para guardar las temperaturas de los meses calurosos
+        int contador = 0;
+
+        // Filtrar los meses calurosos y guardar posiciones y temperaturas
         for (int i = 0; i < miArray.length; i++) {
             if (miArray[i] > TEMPERATURAMAX) {
-                mesesCalidos[i] = miArray[i];
+                meses[contador] = i; // Guardar la posición
+                temperaturas[contador] = miArray[i]; // Guardar la temperatura
+                contador++;
             }
         }
-        System.out.println("Los meses mas calidos del año fueron: ");
-        for (int i=0;i<mesesCalidos.length;i++) {
-            System.out.println(i+" Mes: "+ mesesCalidos[i]);
+
+        // Imprimir resultados
+        if (contador == 0) {
+            System.out.println("No hubo meses con temperaturas superiores a " + TEMPERATURAMAX + " grados.");
+        } else {
+            System.out.println("Los meses mas calidos del año fueron:");
+            for (int i = 0; i < contador; i++) {
+                System.out.println("Mes " + meses[i] + " con temperatura: " + temperaturas[i] + "°C");
+            }
         }
     }
 
-    public static void MostrarContenido(int[] miArray) {
+    public static void HallarMesCalido(int[] miArray) {
+        int temperaturaMayor = 30;
         for (int i = 0; i < miArray.length; i++) {
-            System.out.println("Posicion --> " + (i + 1) + " -- " + miArray[i]);
+            if (miArray[i] > temperaturaMayor) {
+                temperaturaMayor = miArray[i];
+                System.out.println("Has hallado una temperatura mayor a 30 en el mes: " + i);
+                break;//Salids del bucle
+            }
         }
     }
 
-    public static void MostrarOrdenInverso(int[] miArray) {
-        for (int i = miArray.length - 1; i >= 0; i--) {
-            System.out.println("Orden inverso --> " + (miArray.length - i) + " -- " + miArray[i]);
-        }
-    }
-}
-/*
-      int temperaturaMax=miArray[0];
-            for(int i=1;i<miArray.length;i++){ 
-                
-                if(miArray[i]>temperaturaMax) 
-                    temperaturaMax=miArray[i];
+    public static void RecorrerOtraForma(int[] miArray) {
+        // Ordenar el array
+        Arrays.sort(miArray);
+        // Imprimir los elementos mayores a 30
+        System.out.println("Temperatura mayor a 30 y su posicion:");
+        boolean encontrado = false;
+
+        while (!encontrado) {
+            for (int i = 0; i < miArray.length; i++) {
+                if (miArray[i] > 30) {
+                    System.out.println("Posición: " + i + ", Valor: " + miArray[i]);
+                    encontrado = true;
+                }
             }
-            
-        return temperaturaMax;
-    
-*/
+        }
+        System.out.println("No se encontraron elementos mayores a 30.");
+    }
+
+    public static void TemperaturasRepetidas(int[] miArray) {
+        int contadorMeses = 0;
+        int temperaturaAnterior = miArray[0];
+        for (int i = 0; i < miArray.length; i++) {
+            if (miArray[i] == temperaturaAnterior) {
+                System.out.println(i + " Mes, repite la tmeperatura del mes: " + temperaturaAnterior);
+                contadorMeses++;
+            }
+        }
+        System.out.println("La cantidad de repeciones en el array es: " + contadorMeses);
+    }   
+}
