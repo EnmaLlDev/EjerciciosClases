@@ -33,19 +33,19 @@ public class e5_SorteoC {
 
         // Método para generar un boleto con 6 números únicos entre 1 y 49
         public static int[] generarBoleto(Random random) {
-            int[] boleto = new int[6];
+            int[] plazas = new int[6];
             int indice = 0;
 
             while (indice < 6) {
                 int numero = random.nextInt(49) + 1; // Generar número entre 1 y 49
-                if (!contiene(boleto, numero, indice)) {
-                    boleto[indice] = numero;
+                if (!contiene(plazas, numero, indice)) {
+                    plazas[indice] = numero;
                     indice++;
                 }
             }
 
-            Arrays.sort(boleto); // Ordenar el boleto para facilitar la comparación
-            return boleto;
+            Arrays.sort(plazas); // Ordenar el boleto para facilitar la comparación
+            return plazas;
         }
 
         // Método para verificar si un número ya está en el boleto
