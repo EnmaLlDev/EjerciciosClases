@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Array_MenuTemperaturas {
+public class e2_Array_MenuTemperaturas {
 
     public static void main(String[] args) {
         MostrarMenu();
@@ -132,9 +132,11 @@ public class Array_MenuTemperaturas {
     public static void TemperaturasRepetidas(int[] miArray) {
         int contadorMeses = 0;
         int temperaturaAnterior = miArray[0];
+        
         for (int i = 0; i < miArray.length; i++) {
+            
             if (miArray[i] == temperaturaAnterior) {
-                System.out.println(i + " Mes, repite la tmeperatura del mes: " + temperaturaAnterior);
+                System.out.println( i+1 + " Mes, repite la tmeperatura del mes: " + temperaturaAnterior);
                 contadorMeses++;
             }
         }

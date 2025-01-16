@@ -2,7 +2,7 @@ package pr.ellt07;
 
 import java.util.Arrays;
 
-public class ELLt07 {
+public class e_cuestiones_previas {
     /*Bloque A: Array
     Cuestiones:
     Ejecuta estas porciones de código y responde a las cuestiones:*/

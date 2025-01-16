@@ -3,7 +3,7 @@ package pr.ellt07;
 import java.util.*;
 import java.util.Scanner;
 
-public class ELLt07e1 {
+public class e1_MenuBasico {
     /*
     7.1. Realiza un programa que tenga definido un Array como variable global llamado 
         temperaturaMeses, de 12 enteros, con las temperaturas medias de un lugar en cada 
