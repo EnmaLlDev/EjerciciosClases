@@ -1,66 +1,98 @@
 package pr.ellt07;
-
-import static java.lang.Math.random;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Scanner;
 
 public class e6_Parking {
 
     public static void main(String[] args) {
-        int plazas_disponibles = 0;
-        int plazas_ocupadas = 0;
+
+        Parking estacionamiento = new Parking();
+        Scanner scanner = new Scanner(System.in);
+
+        int opcion = 0; // Inicializar la opción antes del bucle
+        while (opcion != 5) {
+            System.out.println("---------------------");
+            System.out.println("1. Mostrar estado PARKING");
+            System.out.println("2. Aparcar");
+            System.out.println("3. Desaparcar");
+            System.out.println("4. Mostrar Plazas Libres");
+            System.out.println("5. Salir");
+            System.out.println("---------------------");
+            System.out.print("Elige una opcion: ");
+            opcion = scanner.nextInt(); // Leer la nueva opción del usuario
+
+            switch (opcion) {
+                case 1 -> estacionamiento.mostrarEstado();
+                case 2 -> {
+                    System.out.print("Introduce la matrícula del coche: ");
+                    String matricula = scanner.next();
+                    System.out.println(matricula);
+                    estacionamiento.aparcar(matricula);
+                }
+                case 3 -> {
+                    System.out.print("Introduce la matrícula del coche a desaparcar: ");
+                    String matricula = scanner.nextLine();
+                    estacionamiento.desaparcar(matricula);
+                }
+                case 4 -> estacionamiento.mostrarPlazasLibres();
+                case 5 -> System.out.println("Saliendo del programa...");
+                default -> System.out.println("Opción inválida. Intenta de nuevo.");
+            }
+        }
     }
 
     public static class Parking {
 
-        private String[] plazasDisponibles;
+        private String[] plazas;
 
         public Parking() {
-            this.plazasDisponibles = new String[20];
+            this.plazas = new String[20];
         }
 
-        public String[] getPlazasDisponibles() {
-            return plazasDisponibles;
-        }
-
-        public void setPlazasDisponibles(String[] plazasDisponibles) {
-            this.plazasDisponibles = plazasDisponibles;
-        }
-
-        public int GenerarMatricula() {
-            int[] matricula = new int[6];
-            int indice = 0;
-
-            while (indice < 6) {
-                Random random = new Random();
-                int numero = random.nextInt(49) + 1; // Generar número entre 1 y 49
-                if (!contiens(matricula, numero, indice)) {
-                    matricula[indice] = numero;
-                    indice++;
+        // Mostrar el estado actual del parking
+        public void mostrarEstado() {
+            System.out.println("Estado del Parking:");
+            for (int i = 0; i < plazas.length; i++) {
+                if (plazas[i] == null) {
+                    System.out.println("Plaza " + (i + 1) + ": Libre");
+                } else {
+                    System.out.println("Plaza " + (i + 1) + ": Ocupada por " + plazas[i]);
                 }
             }
-
-            Arrays.sort(matricula); // Ordenar el boleto para facilitar la comparación
-            return matricula;
         }
 
-        public void MostrarEstado(int[] ArrayCoches) {
-            int contador = 0;
-            for (int i = 0; i <= 20; i++) {
-            }
-        }
-
-        public void ActualizarPlazas() {
-
-        }
-        
-        public static boolean contiene(int[] boleto, int numero, int limite) {
-            for (int i = 0; i < limite; i++) {
-                if (boleto[i] == numero) {
-                    return true;
+        // Aparcar un coche
+        public void aparcar(String matricula) {
+            for (int i = 0; i < plazas.length; i++) {
+                if (plazas[i] == null) { // Encontrar una plaza libre
+                    plazas[i] = matricula;
+                    System.out.println("Coche " + matricula + " aparcado en la plaza " + (i + 1) + ".");
+                    return;
                 }
             }
-            return false;
+            System.out.println("No hay plazas libres para aparcar.");
+        }
+
+        // Desaparcar un coche
+        public void desaparcar(String matricula) {
+            for (int i = 0; i < plazas.length; i++) {
+                if (matricula.equals(plazas[i])) {
+                    plazas[i] = null;
+                    System.out.println("Coche " + matricula + " ha sido desparcado de la plaza " + (i + 1) + ".");
+                    return;
+                }
+            }
+            System.out.println("El coche con matrícula " + matricula + " no está aparcado aquí.");
+        }
+
+        // Mostrar número de plazas libres
+        public void mostrarPlazasLibres() {
+            int libres = 0;
+            for (String plaza : plazas) {
+                if (plaza == null) {
+                    libres++;
+                }
+            }
+            System.out.println("Plazas libres: " + libres + " de " + plazas.length);
         }
     }
 }
